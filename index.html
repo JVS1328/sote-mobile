@@ -8,12 +8,13 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <script>
-/* Fit the 1600x900 game to the screen: widen the layout viewport until 900px of height fits too. */
+/* Fit the game to the screen in either orientation. */
 (function () {
 	var meta = document.querySelector('meta[name=viewport]'), cur = 1600;
 	function fit() {
 		var ratio = window.innerWidth / window.innerHeight; // aspect ratio is the same at any zoom
-		var w = Math.ceil(Math.max(1600, 900 * ratio));
+		// landscape: whole 1600x900 game; upright: 1140 wide, story and stats stacked (see portrait CSS)
+		var w = ratio >= 1 ? Math.ceil(Math.max(1600, 900 * ratio)) : 1140;
 		if (w !== cur) { cur = w; meta.setAttribute('content', 'width=' + w); }
 	}
 	fit();
@@ -26,6 +27,22 @@
 * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 html, body { touch-action: manipulation; }
 input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; }
+/* Phones show the 1600x900 game at ~40% size, so blow the text up to stay readable (panels scroll). */
+@media (pointer: coarse) {
+	html:root { --font-size-reading: 22pt; }
+	.choicegroup a.link-internal { font-size: 22pt !important; }
+	#backgroundsubclasssection_choices button { font-size: 16pt; } /* fixed-height boxes */
+}
+/* Upright phone: stack story above stats, splitting the shared frame image between the two panels. */
+@media (orientation: portrait) {
+	html #interface, html body[data-tags~=Chargen] #chargeninterface { grid-template-columns: minmax(10px, auto) auto minmax(10px, auto); }
+	html #interfaceforeground { grid-template-areas: "mainview" "statsview"; grid-template-columns: 1100px; grid-template-rows: 850px 850px; background-size: 0 0; }
+	html #mainview, html #statsview { background-image: inherit; background-repeat: no-repeat; background-size: 1446px 850px; }
+	html #mainview { background-position: -346px 0; }
+	html #statsview { width: 328px; justify-self: center; background-position: 0 0; }
+	html #chargenscreen { zoom: 0.83; } /* widest chargen screen is 1350px */
+	html .bgimage-title { background-size: 100% auto; -webkit-background-size: 100% auto; } /* keep the logo whole */
+}
 </style>
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
