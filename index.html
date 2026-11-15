@@ -4,6 +4,29 @@
 <meta charset="UTF-8" />
 <title>Shadow of the Eagles</title>
 <meta name="viewport" content="width=1600" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<script>
+/* Fit the 1600x900 game to the screen: widen the layout viewport until 900px of height fits too. */
+(function () {
+	var meta = document.querySelector('meta[name=viewport]'), cur = 1600;
+	function fit() {
+		var ratio = window.innerWidth / window.innerHeight; // aspect ratio is the same at any zoom
+		var w = Math.ceil(Math.max(1600, 900 * ratio));
+		if (w !== cur) { cur = w; meta.setAttribute('content', 'width=' + w); }
+	}
+	fit();
+	window.addEventListener('resize', fit);
+	window.addEventListener('orientationchange', function () { setTimeout(fit, 300); });
+})();
+</script>
+<style>body[data-tags~=Chargen] .passage > br { display: none; } /* stray line breaks pushed chargen off screen */
+/* Make taps act like an app: no grey flash, no text selection or long-press menu, no double-tap zoom delay. */
+* { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+html, body { touch-action: manipulation; }
+input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; }
+</style>
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
 <!--
