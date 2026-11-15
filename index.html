@@ -21,7 +21,12 @@
 	window.addEventListener('orientationchange', function () { setTimeout(fit, 300); });
 })();
 </script>
-<style>body[data-tags~=Chargen] .passage > br { display: none; } /* stray line breaks pushed chargen off screen */</style>
+<style>body[data-tags~=Chargen] .passage > br { display: none; } /* stray line breaks pushed chargen off screen */
+/* Make taps act like an app: no grey flash, no text selection or long-press menu, no double-tap zoom delay. */
+* { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+html, body { touch-action: manipulation; }
+input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; }
+</style>
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
 <!--
