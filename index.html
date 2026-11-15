@@ -26,6 +26,18 @@
 * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 html, body { touch-action: manipulation; }
 input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; }
+/* Phones show the 1600x900 game at ~40% size, so blow the text up to stay readable (panels scroll). */
+@media (pointer: coarse) {
+	html:root { --font-size-reading: 22pt; }
+	.choicegroup a.link-internal { font-size: 22pt !important; }
+	#backgroundsubclasssection_choices button { font-size: 16pt; } /* fixed-height boxes */
+}
+/* The game is widescreen only; held upright it would be a quarter size. */
+#rotate-hint { display: none; }
+@media (orientation: portrait) {
+	#rotate-hint { display: flex; position: fixed; inset: 0; z-index: 2147483647; align-items: center; justify-content: center; text-align: center;
+		padding: 0 10%; background: #111; color: #d4af37; font: bold 90px/1.3 Garamond, serif; }
+}
 </style>
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -122,6 +134,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 <style id="style-ui-debug-views" type="text/css">html[data-debug-view] .debug{padding:.25em;background-color:#234}html[data-debug-view] .debug[title]{cursor:help}html[data-debug-view] .debug.block{display:inline-block;vertical-align:middle}html[data-debug-view] .debug.invalid{text-decoration:line-through}html[data-debug-view] .debug.hidden,html[data-debug-view] .debug.hidden .debug{background-color:#555}html:not([data-debug-view]) .debug.hidden{display:none}html[data-debug-view] .debug[data-name][data-type].nonvoid::after,html[data-debug-view] .debug[data-name][data-type]::before{background-color:rgba(0,0,0,.25);font-family:monospace,monospace;white-space:pre}html[data-debug-view] .debug[data-name][data-type]::before{content:attr(data-name)}html[data-debug-view] .debug[data-name][data-type|=macro]::before{content:"<<" attr(data-name) ">>"}html[data-debug-view] .debug[data-name][data-type|=macro].nonvoid::after{content:"<</" attr(data-name) ">>"}html[data-debug-view] .debug[data-name][data-type|=html]::before{content:"<" attr(data-name) ">"}html[data-debug-view] .debug[data-name][data-type|=html].nonvoid::after{content:"</" attr(data-name) ">"}html[data-debug-view] .debug[data-name][data-type]:not(:empty)::before{margin-right:.25em}html[data-debug-view] .debug[data-name][data-type].nonvoid:not(:empty)::after{margin-left:.25em}html[data-debug-view] .debug[data-name][data-type|=special],html[data-debug-view] .debug[data-name][data-type|=special]::before{display:block}</style>
 </head>
 <body>
+	<div id="rotate-hint">Turn your phone sideways to play.<br><br>Nothing happens? Turn off Portrait Orientation Lock in Control Center.</div>
 	<div id="init-screen">
 		<div id="init-no-js"><noscript>JavaScript must be enabled to play.</noscript></div>
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
